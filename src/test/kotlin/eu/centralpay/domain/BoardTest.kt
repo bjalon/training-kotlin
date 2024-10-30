@@ -5,6 +5,7 @@ import eu.centralpay.domain.cells.FinalCell
 import eu.centralpay.domain.cells.GooseCell
 import eu.centralpay.domain.cells.HostelCell
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -38,6 +39,12 @@ class BoardTest {
             if (i !in listOf(9, 18, 27, 36, 45, 54, 6, 19, 63, 42, 58))
                 assertTrue(board.getCell(i).name.startsWith("Cell $i"), "Expected ${board.getCell(i).name} starts with Cell $i")
         }
+    }
+    @Test
+    fun `should throw when get cells outofBound`() {
+        val board = Board()
+
+        assertThrows<Exception> { board.getCell(64) }
     }
 
     @Test

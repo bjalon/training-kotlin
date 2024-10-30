@@ -2,6 +2,7 @@ package eu.centralpay.domain
 
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -25,6 +26,8 @@ class PlayerTest {
         assertEquals("playerName", player.name)
         assertEquals("cellName", player.currentCell.name)
         assertEquals(20, player.pieceCount)
+        assertFalse(player.isFrozen)
+        assertEquals(0, player.standbyRoundCount)
     }
 
     @Test
@@ -117,10 +120,39 @@ class PlayerTest {
         every { cup.value } returns 1
 
         player.standbyOnNextRound(standbyRoundCount = 2)
+        assertEquals(2, player.standbyRoundCount)
         player.play(cup)
         player.play(cup)
         player.play(cup)
 
+        assertEquals(0, player.standbyRoundCount)
         assertEquals("cell 1", player.currentCell.name)
+    }
+
+    @Test
+    fun `should freeze if player freeze`() {
+        val player = Player(name = "playerName", currentCell = Cell("init cell", Cell("cell 1")))
+
+        player.freeze()
+        player.play(cup)
+        player.play(cup)
+        player.play(cup)
+
+        assertEquals("init cell", player.currentCell.name)
+        assertTrue(player.isFrozen)
+    }
+
+    @Test
+    fun `should unfreeze if player freeze`() {
+        val player = Player(name = "playerName", currentCell = Cell("init cell", Cell("cell 1")))
+
+        every { cup.value } returns 1
+
+        player.freeze()
+        player.unFreeze()
+        player.play(cup)
+
+        assertEquals("cell 1", player.currentCell.name)
+        assertFalse(player.isFrozen)
     }
 }

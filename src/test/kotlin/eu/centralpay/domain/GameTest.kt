@@ -44,6 +44,7 @@ class GameTest {
         assertEquals("Cell 5", game.players[3].currentCell.name)
         assertTrue(game.isInProgress)
         assertNull(game.winner)
+        assertEquals(1, game.roundIndex)
     }
 
     @Test
@@ -54,6 +55,7 @@ class GameTest {
         val e = assertThrows<UserWonException> { game.doRound() }
 
         assertEquals("Reece", e.player.name)
+        assertEquals(1, game.roundIndex)
     }
 
     @Test
@@ -67,6 +69,7 @@ class GameTest {
 
         assertFalse(game.isInProgress)
         assertNotNull(game.winner)
-        assertEquals("Reece", game.winner!!.name)
+        assertEquals("Benjamin", game.winner!!.name)
+        assertEquals(29, game.roundIndex)
     }
 }

@@ -7,11 +7,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class JailCellTest {
 
-    private lateinit var cell: Cell
+    private lateinit var cell: JailCell
     private lateinit var player1: Player
     private lateinit var player2: Player
 
@@ -42,13 +43,13 @@ class JailCellTest {
     @Test
     fun `player should freeze and lost piece on jail cell`() {
 
-        val cell = JailCell(name = "JailCell")
-
         verify(exactly = 0) { player1.lostOnePiece() }
         verify(exactly = 0) { player1.freeze() }
         cell.action(player = player1, mockk())
         verify(exactly = 1) { player1.lostOnePiece() }
         verify(exactly = 1) { player1.freeze() }
+
+        assertEquals(player1, cell.frozenPlayer)
     }
 
     @Test
@@ -59,6 +60,7 @@ class JailCellTest {
         verify(exactly = 1) { player1.unFreeze() }
         verify(exactly = 1) { player2.lostOnePiece() }
         verify(exactly = 1) { player2.freeze() }
-    }
 
+        assertEquals(player2, cell.frozenPlayer)
+    }
 }
