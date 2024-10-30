@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
 
 class DiceTest {
 
@@ -31,21 +30,37 @@ class DiceTest {
     }
 
     @Test
-    fun `should dice equilibrated`() {
+    fun `should dice balanced`() {
         val resultsCount = HashMap<Int, Int>()
 
-        val dice = Dice()
+        val rollCount = 600_000
+        val facesCount = 6
+        val expectedLimit = getExpectedLimit(rollCount, facesCount, 0.5)
 
-        val rollCount = 1000
+        val dice = Dice(facesCount = facesCount)
+
+        repeatRollExperience(dice, rollCount, resultsCount)
+
+        resultsCount.forEach { (diceValue, valueCount) ->
+            assertTrue(valueCount > expectedLimit, "$diceValue: $valueCount not enough than $expectedLimit")
+        }
+    }
+
+    @Suppress("SameParameterValue")
+    private fun repeatRollExperience(dice: Dice, rollCount: Int, resultsCount: HashMap<Int, Int>) {
         (1..rollCount).forEach {
             dice.roll()
             resultsCount[dice.value] = (resultsCount[dice.value] ?: 0) + 1
         }
-
-        val faces = dice.facesCount
-
-        resultsCount.forEach {
-            assertTrue(it.value > rollCount / faces / 2)
+        resultsCount.forEach { (diceValue, valueCount) ->
+            println("$diceValue: $valueCount")
         }
+    }
+
+    @Suppress("SameParameterValue")
+    private fun getExpectedLimit(rollCount: Int, faces: Int, errorExpected: Double): Double {
+        val expectedLimit = rollCount / faces - rollCount * errorExpected / 100
+        println("expectedLimit: $expectedLimit")
+        return expectedLimit
     }
 }
