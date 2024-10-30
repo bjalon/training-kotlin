@@ -67,6 +67,6 @@ class GameTest {
 
         assertFalse(game.isInProgress)
         assertNotNull(game.winner)
-        assertEquals("Benjamin", game.winner!!.name)
+        assertEquals("Reece", game.winner!!.name)
     }
 }

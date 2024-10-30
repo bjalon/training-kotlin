@@ -16,6 +16,7 @@ class HostelCellTest {
     @BeforeEach
     fun setUp() {
         player = mockk<Player>().apply {
+            every { pieceCount } returns 20
             every { lostOnePiece() } returns Unit
             every { standbyOnNextRound() } returns Unit
         }

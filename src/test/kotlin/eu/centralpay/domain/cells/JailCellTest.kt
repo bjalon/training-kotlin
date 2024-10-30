@@ -18,11 +18,15 @@ class JailCellTest {
     @BeforeEach
     fun setUp() {
         player1 = mockk<Player>().apply {
+            every { pieceCount } returns 20
+            every { name } returns "Benjamin"
             every { lostOnePiece() } returns Unit
             every { freeze() } returns Unit
             every { unFreeze() } returns Unit
         }
         player2 = mockk<Player>().apply {
+            every { pieceCount } returns 20
+            every { name } returns "Benjamin"
             every { lostOnePiece() } returns Unit
             every { freeze() } returns Unit
             every { unFreeze() } returns Unit

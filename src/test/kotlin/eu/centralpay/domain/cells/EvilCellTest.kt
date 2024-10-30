@@ -17,7 +17,10 @@ class EvilCellTest {
 
     @Test
     fun `player should lost one piece on evil cell`() {
-        val player = mockk<Player>().apply { every { lostOnePiece() } returns Unit }
+        val player = mockk<Player>().apply {
+            every { pieceCount } returns 20
+            every { lostOnePiece() } returns Unit
+        }
         val cell = MyEvilCellForTest(name = "EvilCell")
 
         verify(exactly = 0) { player.lostOnePiece() }
