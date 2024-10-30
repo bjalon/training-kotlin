@@ -10,13 +10,13 @@ class Player(val name: String, var currentCell: Cell) {
     fun play(cup: Cup) {
         if (standbyRoundCount > 0) {
             standbyRoundCount --
-            println("${name} is on standby for $standbyRoundCount round(s)... Next player")
+            println("${name}(${currentCell.name}) is on standby for $standbyRoundCount round(s)... Next player")
         } else if (isFrozen) {
-            println("${name} is frozen on cell ${currentCell.name}")
+            println("${name}(${currentCell.name}) is frozen on cell")
         } else {
             cup.roll()
             val moveValue = cup.value
-            println("${name} has rolled $moveValue")
+            println("${name}(${currentCell.name}) has rolled $moveValue")
             moveToCell(moveValue, cup)
         }
     }

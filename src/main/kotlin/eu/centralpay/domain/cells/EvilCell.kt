@@ -7,5 +7,6 @@ import eu.centralpay.domain.Player
 abstract class EvilCell(name: String, next: Cell? = null): Cell(name, next) {
     override fun action(player: Player, cup: Cup) {
         player.lostOnePiece()
+        println("\tEvil action user lost one piece: ${player.pieceCount}")
     }
 }

@@ -11,5 +11,6 @@ class BridgeCell(name: String, next: Cell? = null): EvilCell(name, next) {
     override fun action(player: Player, cup: Cup) {
         super.action(player, cup)
         player.moveToCell(linkedCell, cup)
+        println("\tBridge action move to ${linkedCell.name}")
     }
 }

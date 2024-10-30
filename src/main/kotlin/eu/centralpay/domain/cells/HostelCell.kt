@@ -8,5 +8,6 @@ class HostelCell(name: String, next: Cell? = null): EvilCell(name, next) {
     override fun action(player: Player, cup: Cup) {
         super.action(player, cup)
         player.standbyOnNextRound()
+        println("\tHostel action frozen during one round")
     }
 }
