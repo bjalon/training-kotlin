@@ -1,5 +1,9 @@
 package eu.centralpay.domain
 
-class Cell(val name: String, next: Cell? = null) {
-    val next: Cell = next ?: this
+open class Cell(val name: String, next: Cell? = null) {
+    var next: Cell = next ?: this
+
+    open fun action(player: Player, cup: Cup) {
+        println("  No special behavior")
+    }
 }

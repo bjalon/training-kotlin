@@ -1,10 +1,12 @@
 package eu.centralpay.domain
 
+import eu.centralpay.domain.exceptions.UserWonException
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -36,23 +38,22 @@ class GameTest {
         every { cup.value } returnsMany listOf(1, 2, 3, 4)
 
         game.doRound()
-        assertEquals("Cell 1", game.players[0].currentCell.name)
-        assertEquals("Cell 2", game.players[1].currentCell.name)
-        assertEquals("Cell 3", game.players[2].currentCell.name)
-        assertEquals("Cell 4", game.players[3].currentCell.name)
+        assertEquals("Cell 2", game.players[0].currentCell.name)
+        assertEquals("Cell 3", game.players[1].currentCell.name)
+        assertEquals("Cell 4", game.players[2].currentCell.name)
+        assertEquals("Cell 5", game.players[3].currentCell.name)
         assertTrue(game.isInProgress)
         assertNull(game.winner)
     }
 
     @Test
-    fun `should game should be done if a player has won`() {
+    fun `should throw exception if user has won`() {
         every { cup.roll() } returns Unit
         every { cup.value } returnsMany listOf(1, 2, 3, game.board.cellCount)
 
-        game.doRound()
-        assertFalse(game.isInProgress)
-        assertNotNull(game.winner)
-        assertEquals("Reece", game.winner!!.name)
+        val e = assertThrows<UserWonException> { game.doRound() }
+
+        assertEquals("Reece", e.player.name)
     }
 
     @Test
@@ -66,6 +67,6 @@ class GameTest {
 
         assertFalse(game.isInProgress)
         assertNotNull(game.winner)
-        assertEquals("Bénédicte", game.winner!!.name)
+        assertEquals("Benjamin", game.winner!!.name)
     }
 }

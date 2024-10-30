@@ -1,18 +1,31 @@
 package eu.centralpay.domain
 
+import eu.centralpay.domain.cells.*
+
 class Board(val cellCount: Int = 63) {
 
     val startCell: Cell
-    val cells = mutableMapOf<Int, Cell>()
+        get() = cells[1]!!
+
+    val cells = HashMap<Int, Cell>()
 
     init {
-        startCell = initCellWithNextIndex(name = "Start", lastCellIndex = cellCount)
+        (1..cellCount).map { if (cells[it] == null) generateCell(it) }
+        (1 until cellCount).forEach { cells[it]!!.next = cells[it + 1]!! }
     }
 
-    private fun initCellWithNextIndex(name: String, lastCellIndex: Int, index: Int = 0): Cell =
-        if (index != lastCellIndex) {
-            val nextIndex = index + 1
-            Cell(name = name, next = initCellWithNextIndex("Cell $nextIndex", lastCellIndex, nextIndex)).apply { cells[index] = this }
-        } else
-            Cell(name).apply { cells[index] = this }
+    fun getCell(index: Int): Cell = cells[index] ?: throw UnsupportedOperationException()
+
+    private fun generateCell(index: Int): Cell {
+        val cell = when (index) {
+            9, 18, 27, 36, 45, 54 -> GooseCell("Cell $index (Goose)")
+            6 -> BridgeCell("Cell $index (Bridge)").apply { linkedCell = generateCell(12) }
+            52 -> JailCell("Cell $index (Jail)")
+            19 -> HostelCell("Cell $index (Hostel)")
+            63 -> FinalCell("Cell $index (Final)")
+            else -> Cell("Cell $index")
+        }
+        cells[index] = cell
+        return cell
+    }
 }

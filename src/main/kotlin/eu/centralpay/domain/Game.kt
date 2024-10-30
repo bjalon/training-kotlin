@@ -1,5 +1,7 @@
 package eu.centralpay.domain
 
+import eu.centralpay.domain.exceptions.UserWonException
+
 class Game(playerNames: List<String>, val cup: Cup = Cup()) {
 
     val board = Board()
@@ -14,19 +16,18 @@ class Game(playerNames: List<String>, val cup: Cup = Cup()) {
         println("***************** Starting round ${++roundIndex} *****************")
         for (player in players) {
             player.play(cup)
-            if (isUserHasWon(player)) {
-                winner = player
-                println("${player.name} has won the game!")
-                break
-            }
         }
     }
 
     fun playUntilAUserHasWon() {
-        do {
-            doRound()
-        } while (isInProgress)
+        try {
+            while (true) {
+                doRound()
+            }
+        } catch (e: UserWonException) {
+            winner = e.player
+            println("${e.player.name} has won the game!")
+        }
     }
 
-    private fun isUserHasWon(player: Player) = player.currentCell.name == "Cell ${board.cellCount}"
 }
