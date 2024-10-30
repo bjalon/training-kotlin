@@ -10,10 +10,10 @@ class JailCell(name: String, next: Cell? = null): EvilCell(name, next) {
     override fun action(player: Player, cup: Cup) {
         super.action(player, cup)
         frozenPlayer?.let {
-            println("\tJail action unfreeze ${it.name}")
+            println("\t$name: unfreeze ${it.name}")
             it.unFreeze()
         }
-        println("\tJail action freeze ${player.name}")
+        println("\t$name: freeze")
         frozenPlayer = player
         player.freeze()
     }

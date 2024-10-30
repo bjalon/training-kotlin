@@ -18,6 +18,7 @@ class Player(val name: String, var currentCell: Cell) {
             println("${name}(${currentCell.name}) has rolled ${cup.value}")
             moveToCell(cup)
         }
+        println("\t${name}(${currentCell.name})")
     }
 
     fun moveToCell(cup: Cup) {

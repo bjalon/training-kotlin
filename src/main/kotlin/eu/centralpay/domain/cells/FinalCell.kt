@@ -7,7 +7,7 @@ import eu.centralpay.domain.exceptions.UserWonException
 
 class FinalCell(name: String, next: Cell? = null): Cell(name, next) {
     override fun action(player: Player, cup: Cup) {
-        println("\tFinal cell !!")
+        println("\t$name WINNER !!")
         throw UserWonException(player)
     }
 }

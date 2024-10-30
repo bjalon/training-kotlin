@@ -8,7 +8,7 @@ abstract class FrozenCell(name: String, private val frozenRoundCount: Int = 1, n
     override fun action(player: Player, cup: Cup) {
         super.action(player, cup)
         player.standbyOnNextRound(standbyRoundCount = frozenRoundCount)
-        println("\tHostel action frozen during one round")
+        println("\t$name: frozen during $frozenRoundCount round(s)")
     }
 }
 

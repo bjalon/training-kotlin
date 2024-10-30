@@ -10,7 +10,7 @@ class RedirectCell(name: String, next: Cell? = null): EvilCell(name, next) {
 
     override fun action(player: Player, cup: Cup) {
         super.action(player, cup)
+        println("\t$name: move to ${linkedCell.name}")
         player.moveToCell(linkedCell, cup)
-        println("\tBridge action move to ${linkedCell.name}")
     }
 }
