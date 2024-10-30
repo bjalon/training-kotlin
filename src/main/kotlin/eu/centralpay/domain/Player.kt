@@ -15,13 +15,13 @@ class Player(val name: String, var currentCell: Cell) {
             println("${name}(${currentCell.name}) is frozen on cell")
         } else {
             cup.roll()
-            val moveValue = cup.value
-            println("${name}(${currentCell.name}) has rolled $moveValue")
-            moveToCell(moveValue, cup)
+            println("${name}(${currentCell.name}) has rolled ${cup.value}")
+            moveToCell(cup)
         }
     }
 
-    fun moveToCell(moveValue: Int, cup: Cup) {
+    fun moveToCell(cup: Cup) {
+        val moveValue = cup.value
         val targetCell = (moveValue downTo 1).fold(currentCell) { acc, _ -> acc.next }
         moveToCell(targetCell = targetCell, cup = cup)
     }
@@ -33,10 +33,6 @@ class Player(val name: String, var currentCell: Cell) {
 
     fun lostOnePiece() {
         pieceCount--
-    }
-
-    fun moveAgain(cup: Cup) {
-        play(cup)
     }
 
     fun standbyOnNextRound(standbyRoundCount: Int = 1) {

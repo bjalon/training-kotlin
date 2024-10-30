@@ -4,7 +4,7 @@ import eu.centralpay.domain.Cell
 import eu.centralpay.domain.Cup
 import eu.centralpay.domain.Player
 
-class BridgeCell(name: String, next: Cell? = null): EvilCell(name, next) {
+class RedirectCell(name: String, next: Cell? = null): EvilCell(name, next) {
 
     lateinit var linkedCell: Cell
 

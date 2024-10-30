@@ -35,7 +35,7 @@ class GameTest {
     @Test
     fun `should play first round`() {
         every { cup.roll() } returns Unit
-        every { cup.value } returnsMany listOf(1, 2, 3, 4)
+        every { cup.value } returnsMany listOf(1, 1, 2, 2, 3, 3, 4, 4,)
 
         game.doRound()
         assertEquals("Cell 2", game.players[0].currentCell.name)
@@ -49,7 +49,7 @@ class GameTest {
     @Test
     fun `should throw exception if user has won`() {
         every { cup.roll() } returns Unit
-        every { cup.value } returnsMany listOf(1, 2, 3, game.board.cellCount)
+        every { cup.value } returnsMany listOf(1, 1, 2, 2, 3, 3, game.board.cellCount, game.board.cellCount)
 
         val e = assertThrows<UserWonException> { game.doRound() }
 

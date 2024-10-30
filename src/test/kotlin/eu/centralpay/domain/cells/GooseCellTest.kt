@@ -18,7 +18,8 @@ class GooseCellTest {
     @BeforeEach
     fun setUp() {
         player = mockk<Player>().apply {
-            every { moveAgain(any()) } returns Unit
+            every { currentCell } returns Cell("CurrentCell")
+            every { moveToCell(any()) } returns Unit
         }
         cell = GooseCell(name = "GooseCell")
     }
@@ -34,9 +35,9 @@ class GooseCellTest {
 
         val cell = GooseCell(name = "GooseCell")
 
-        verify(exactly = 0) { player.moveAgain(any()) }
+        verify(exactly = 0) { player.moveToCell(any()) }
         cell.action(player = player, cup)
-        verify(exactly = 1) { player.moveAgain(any()) }
+        verify(exactly = 1) { player.moveToCell(any()) }
     }
 
 }

@@ -1,6 +1,6 @@
 package eu.centralpay.domain
 
-import eu.centralpay.domain.cells.BridgeCell
+import eu.centralpay.domain.cells.RedirectCell
 import eu.centralpay.domain.cells.FinalCell
 import eu.centralpay.domain.cells.GooseCell
 import eu.centralpay.domain.cells.HostelCell
@@ -35,7 +35,7 @@ class BoardTest {
         val board = Board()
 
         for (i in 1..12) {
-            if (i !in listOf(9, 18, 27, 36, 45, 54, 6, 19, 63))
+            if (i !in listOf(9, 18, 27, 36, 45, 54, 6, 19, 63, 42, 58))
                 assertTrue(board.getCell(i).name.startsWith("Cell $i"), "Expected ${board.getCell(i).name} starts with Cell $i")
         }
     }
@@ -57,8 +57,26 @@ class BoardTest {
         val board = Board()
 
         val cell = board.getCell(6)
-        assertTrue(cell is BridgeCell, "Expected ${cell::class.java.name} to be a BridgeCell")
+        assertTrue(cell is RedirectCell, "Expected ${cell::class.java.name} to be a RedirectCell")
         assertEquals("Cell 12", cell.linkedCell.name)
+    }
+
+    @Test
+    fun `should 42 cell be a Labyrinth cell`() {
+        val board = Board()
+
+        val cell = board.getCell(42)
+        assertTrue(cell is RedirectCell, "Expected ${cell::class.java.name} to be a RedirectCell")
+        assertEquals("Cell 30", cell.linkedCell.name)
+    }
+
+    @Test
+    fun `should 58 cell be a Death cell`() {
+        val board = Board()
+
+        val cell = board.getCell(58)
+        assertTrue(cell is RedirectCell, "Expected ${cell::class.java.name} to be a RedirectCell")
+        assertEquals("Cell 1", cell.linkedCell.name)
     }
 
     @Test

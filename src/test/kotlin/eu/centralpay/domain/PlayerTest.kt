@@ -74,7 +74,7 @@ class PlayerTest {
         player.play(cup)
         assertEquals("cell 1", player.currentCell.name)
 
-        player.moveAgain(cup)
+        player.moveToCell(cup)
         assertEquals("cell 2", player.currentCell.name)
     }
 
